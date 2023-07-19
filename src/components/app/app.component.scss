@@ -27,6 +27,30 @@
   max-width: 960px;
   flex-direction: column;
   align-items: center;
+
+  .intersection {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .zones {
+      position: absolute;
+    }
+
+    .actions {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 3px;
+      color: white;
+      padding: 1rem;
+      cursor: pointer;
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
 }
 
 @media screen and (max-width: 575px) {

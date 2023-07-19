@@ -1,0 +1,8 @@
+<div>
+  <svg [attr.height]="646" [attr.width]="1000" (click)="drawPolygon($event)">
+    <polygon
+      [attr.points]="points | pointsToString"
+      style="fill:none;stroke:red;stroke-width:5;fill-rule:nonzero;"
+    />
+  </svg>
+</div>

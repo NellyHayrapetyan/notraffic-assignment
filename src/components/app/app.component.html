@@ -1,0 +1,28 @@
+<div class="toolbar" role="banner">
+</div>
+<div class="content" role="main">
+  <h1>Intersection</h1>
+
+  <div class="intersection">
+    <img src="./assets/intersection.png" alt="intersection">
+    <div class="zones">
+      <app-zones [zones]="zones"></app-zones>
+    </div>
+    <div class="zones">
+      <app-new-zone
+        *ngIf="drawPolygon"
+        [zone]="currentZone"
+        (createPolygon)="createPolygon($event)"
+      ></app-new-zone>
+    </div>
+    <button class="actions" (click)="createEditZone()">Create/Edit Zone</button>
+  </div>
+
+  <ng-container *ngIf="showPopup">
+    <app-zone-popup
+      [zones]="zones"
+      (onSubmit)="onSubmit($event)"
+      (onClose)="closePopup()"
+    ></app-zone-popup>
+  </ng-container>
+</div>

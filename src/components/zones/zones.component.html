@@ -1,0 +1,15 @@
+<div>
+  <ng-container *ngFor="let zone of zones">
+    <div class="zone-name" [style.left.px]="zone.points[0][0]" [style.top.px]="zone.points[0][1]">
+      {{ zone.name }}
+    </div>
+  </ng-container>
+  <svg [attr.height]="646" [attr.width]="1000">
+    <ng-container *ngFor="let zone of zones">
+      <polygon
+        [attr.points]="zone.points | pointsToString"
+        style="fill:none;stroke:aqua;stroke-width:5;fill-rule:nonzero;"
+      />
+    </ng-container>
+  </svg>
+</div>

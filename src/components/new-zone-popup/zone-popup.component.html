@@ -1,0 +1,20 @@
+<div class="popup-container">
+  <div class="popup-content">
+    <ng-container *ngIf="!editMode">
+      <div class="action-list">
+        <ng-container *ngFor="let zone of zones">
+          <button (click)="openEditMode(zone)">Click to Edit {{ zone.name }}</button>
+        </ng-container>
+        <button (click)="openEditMode()">Click to Create New Zone</button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="editMode">
+      <h2>Zone Title</h2>
+      <input type="text" [formControl]="zoneName"/>
+      <button (click)="submit()" [disabled]="zoneName.invalid">Submit</button>
+      <button (click)="close()">Close</button>
+      <button (click)="goBack()">Back</button>
+    </ng-container>
+  </div>
+</div>
