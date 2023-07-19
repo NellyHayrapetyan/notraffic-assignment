@@ -20,7 +20,7 @@ export class ZonePopupComponent {
   constructor(private zoneService: ZoneService) {
   }
 
-  openEditMode(zone?: Zone) {
+  openEditMode(zone?: Zone): void {
     this.editMode = true;
     if (zone) {
       this.currentZone = zone;
@@ -30,13 +30,13 @@ export class ZonePopupComponent {
     }
   }
 
-  deleteZone(zoneId?: number) {
+  deleteZone(zoneId?: number): void {
     if (zoneId) {
       this.zoneService.deleteZone(zoneId).subscribe();
     }
     this.close(zoneId);
   }
-  submit() {
+  submit(): void {
     if (this.zoneName.invalid) {
       return;
     }
@@ -47,11 +47,11 @@ export class ZonePopupComponent {
     });
   }
 
-  close(zoneId?: number) {
+  close(zoneId?: number): void {
     this.onClose.emit(zoneId || null);
   }
 
-  goBack() {
+  goBack(): void {
     this.editMode = false;
   }
 }
