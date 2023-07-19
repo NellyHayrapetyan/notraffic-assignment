@@ -61,8 +61,8 @@ export class AppComponent implements OnInit {
 
   createZone() {
     if (this.currentZone) {
-      this.zoneService.createZone(this.currentZone).subscribe(() => {
-        this.zones = [...(this.zones || []), this.currentZone];
+      this.zoneService.createZone(this.currentZone).subscribe((data) => {
+        this.zones = [...(this.zones || []), data];
       });
     }
   }
