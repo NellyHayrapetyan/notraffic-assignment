@@ -3,16 +3,20 @@
     <ng-container *ngIf="!editMode">
       <div class="action-list">
         <ng-container *ngFor="let zone of zones">
-          <button (click)="openEditMode(zone)">Click to Edit {{ zone.name }}</button>
+          <div class="actions">
+            <button (click)="openEditMode(zone)">Click to Edit {{ zone.name }}</button>
+            <button (click)="deleteZone(zone?.id)">Delete {{ zone.name }}</button>
+          </div>
         </ng-container>
         <button (click)="openEditMode()">Click to Create New Zone</button>
+        <button (click)="close()">Close Popup</button>
       </div>
     </ng-container>
 
     <ng-container *ngIf="editMode">
       <h2>Zone Title</h2>
       <input type="text" [formControl]="zoneName"/>
-      <button (click)="submit()" [disabled]="zoneName.invalid">Submit</button>
+      <button (click)="submit()" [disabled]="zoneName.invalid">Draw Zone</button>
       <button (click)="close()">Close</button>
       <button (click)="goBack()">Back</button>
     </ng-container>

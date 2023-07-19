@@ -15,14 +15,17 @@
         (createPolygon)="createPolygon($event)"
       ></app-new-zone>
     </div>
-    <button class="actions" (click)="createEditZone()">Create/Edit Zone</button>
+    <div class="zone-actions">
+      <button class="actions" (click)="createEditZone()">Create/Edit Zone</button>
+      <button class="actions" (click)="deleteAllZones()">Delete Zones</button>
+    </div>
   </div>
 
   <ng-container *ngIf="showPopup">
     <app-zone-popup
       [zones]="zones"
       (onSubmit)="onSubmit($event)"
-      (onClose)="closePopup()"
+      (onClose)="closePopup($event)"
     ></app-zone-popup>
   </ng-container>
 </div>

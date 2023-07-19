@@ -32,7 +32,7 @@ export class ZoneService {
     return this.httpClient.delete(this.apiUrl);
   }
 
-  deleteZone(zoneId: string): Observable<any> {
+  deleteZone(zoneId: number): Observable<any> {
     return this.httpClient.delete(`${this.apiUrl}/${zoneId}`);
   }
 }

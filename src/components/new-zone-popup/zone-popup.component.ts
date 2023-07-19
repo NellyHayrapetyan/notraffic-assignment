@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import Zone from '../../models/zone.model'
 import {FormControl, Validators} from "@angular/forms";
+import {ZoneService} from "../../services/zone.service";
 
 @Component({
   selector: 'app-zone-popup',
@@ -8,14 +9,16 @@ import {FormControl, Validators} from "@angular/forms";
   styleUrls: ['./zone-popup.component.scss']
 })
 export class ZonePopupComponent {
-  public zoneTitle: string = '';
   public currentZone?: Zone;
   public editMode = false;
 
   public zoneName = new FormControl('', Validators.required);
   @Input() zones?: Zone[];
   @Output() onSubmit = new EventEmitter<any>();
-  @Output() onClose = new EventEmitter<void>();
+  @Output() onClose = new EventEmitter<number | null>();
+
+  constructor(private zoneService: ZoneService) {
+  }
 
   openEditMode(zone?: Zone) {
     this.editMode = true;
@@ -25,6 +28,13 @@ export class ZonePopupComponent {
     } else {
       this.zoneName.setValue('');
     }
+  }
+
+  deleteZone(zoneId?: number) {
+    if (zoneId) {
+      this.zoneService.deleteZone(zoneId).subscribe();
+    }
+    this.close(zoneId);
   }
   submit() {
     if (this.zoneName.invalid) {
@@ -37,8 +47,8 @@ export class ZonePopupComponent {
     });
   }
 
-  close() {
-    this.onClose.emit();
+  close(zoneId?: number) {
+    this.onClose.emit(zoneId || null);
   }
 
   goBack() {

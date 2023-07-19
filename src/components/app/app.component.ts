@@ -46,7 +46,10 @@ export class AppComponent implements OnInit {
     this.closePopup();
   }
 
-  closePopup() {
+  closePopup(zoneId?: number | null) {
+    if (zoneId) {
+      this.zones = this.zones?.filter((zone) => zone.id !== zoneId);
+    }
     this.showPopup = false;
   }
 
@@ -62,5 +65,9 @@ export class AppComponent implements OnInit {
         this.zones = [...(this.zones || []), this.currentZone];
       });
     }
+  }
+
+  deleteAllZones() {
+    this.zoneService.deleteAllZones().subscribe(() => this.zones = []);
   }
 }

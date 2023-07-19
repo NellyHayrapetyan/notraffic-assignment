@@ -1,6 +1,10 @@
 <div>
   <ng-container *ngFor="let zone of zones">
-    <div class="zone-name" [style.left.px]="zone.points[0][0]" [style.top.px]="zone.points[0][1]">
+    <div
+      class="zone-name"
+      [style.left.px]="zone.points[0][0]"
+      [style.top.px]="zone.points[0][1]"
+    >
       {{ zone.name }}
     </div>
   </ng-container>
