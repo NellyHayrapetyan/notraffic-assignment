@@ -1,16 +1,18 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import Zone from '../../models/zone.model'
-import {FormControl, Validators} from "@angular/forms";
-import {ZoneService} from "../../services/zone.service";
+import { FormControl, Validators } from '@angular/forms';
+import { ZoneService } from "../../services/zone.service";
+
 
 @Component({
   selector: 'app-zone-popup',
   templateUrl: './zone-popup.component.html',
   styleUrls: ['./zone-popup.component.scss']
 })
-export class ZonePopupComponent {
+export class ZonePopupComponent implements OnDestroy {
   public currentZone?: Zone;
   public editMode = false;
+  public subscription$: any;
 
   public zoneName = new FormControl('', Validators.required);
   @Input() zones?: Zone[];
@@ -32,7 +34,7 @@ export class ZonePopupComponent {
 
   deleteZone(zoneId?: number): void {
     if (zoneId) {
-      this.zoneService.deleteZone(zoneId).subscribe();
+      this.subscription$ = this.zoneService.deleteZone(zoneId).subscribe();
     }
     this.close(zoneId);
   }
@@ -53,5 +55,11 @@ export class ZonePopupComponent {
 
   goBack(): void {
     this.editMode = false;
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
   }
 }

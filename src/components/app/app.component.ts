@@ -1,24 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import Zone from '../../models/zone.model';
-import {ZoneService} from "../../services/zone.service";
+import { ZoneService } from '../../services/zone.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   public zones?: Zone[];
   public showPopup = false;
   public drawPolygon = false;
   public currentZone: any;
+  private unsubscribe$ = new Subject<void>();
 
-  constructor(private zoneService: ZoneService) {
-  }
+  constructor(private zoneService: ZoneService) {}
   ngOnInit(): void {
-    this.zoneService.getZones().subscribe((data: any) => {
-      this.zones = data
-    })
+    this.zoneService.getZones()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data: any) => {
+        this.zones = data
+      })
   }
 
   createEditZone(): void {
@@ -54,20 +57,33 @@ export class AppComponent implements OnInit {
   }
 
   editZone(): void {
-    this.zoneService.editZone(this.currentZone ).subscribe(() => {
-      this.zones = this.zones?.map((zone: Zone) => (zone.id === this.currentZone?.id ? this.currentZone : zone));
-    });
+    this.zoneService.editZone(this.currentZone)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.zones = this.zones?.map((zone: Zone) =>
+          (zone.id === this.currentZone?.id ? this.currentZone : zone)
+        );
+      });
   }
 
   createZone(): void {
     if (this.currentZone) {
-      this.zoneService.createZone(this.currentZone).subscribe((data) => {
-        this.zones = [...(this.zones || []), data];
-      });
+      this.zoneService.createZone(this.currentZone)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((data) => {
+          this.zones = [...(this.zones || []), data];
+        });
     }
   }
 
   deleteAllZones(): void {
-    this.zoneService.deleteAllZones().subscribe(() => this.zones = []);
+    this.zoneService.deleteAllZones()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => this.zones = []);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

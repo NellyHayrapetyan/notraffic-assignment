@@ -1,7 +1,7 @@
-import {HttpClient} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {environment} from "../environments/environment";
-import {Observable} from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
 import Zone from '../models/zone.model';
 
 @Injectable({
@@ -10,7 +10,7 @@ import Zone from '../models/zone.model';
 export class ZoneService {
   private apiUrl = `${environment.apiUrl}/api/zones`;
 
-  constructor(private httpClient: HttpClient, ) { }
+  constructor(private httpClient: HttpClient) { }
 
   getZones(): Observable<Zone[]> {
     return this.httpClient.get<Zone[]>(this.apiUrl);
