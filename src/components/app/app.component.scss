@@ -30,10 +30,13 @@
 
   .intersection {
     position: relative;
-    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    &.drawing {
+      cursor: crosshair;
+    }
 
     .zones {
       position: absolute;

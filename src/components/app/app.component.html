@@ -3,7 +3,7 @@
 <div class="content" role="main">
   <h1>Intersection</h1>
 
-  <div class="intersection">
+  <div class="intersection" [class.drawing]="currentZone">
     <img src="./assets/intersection.png" alt="intersection">
     <div class="zones">
       <app-zones [zones]="zones"></app-zones>
